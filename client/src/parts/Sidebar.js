@@ -9,7 +9,7 @@ import SidebarListItem from "../components/SidebarListItem";
 
 const Sidebar = () => {
   return (
-    <div className="flex-[0.3] flex flex-col">
+    <div className="flex flex-col w-full h-full">
       <div className="flex justify-between">
         <FaRegCircleUser size={30} />
         <div className="flex">
@@ -23,7 +23,7 @@ const Sidebar = () => {
           <IoMdSearch size={30} />
         </Input>
       </div>
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto no-scrollbar">
         <SidebarListItem />
         <SidebarListItem />
         <SidebarListItem />
