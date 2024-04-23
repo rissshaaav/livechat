@@ -2,5 +2,6 @@
     "emmet.includeLanguages": {
         "javaascript": "javascriptreact",
         "typescript": "typescriptreact"
-    }
+    },
+    "material-icon-theme.activeIconPack": "react"
 }

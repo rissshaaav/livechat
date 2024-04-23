@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
+import { signupApiCall } from "../apis/signup.apiCall";
 
 const Signup = () => {
   const [username, setUsername] = React.useState("");
@@ -17,6 +18,9 @@ const Signup = () => {
     setPassword(event.target.value);
   };
   const handleSubmit = () => {
+    // Send a POST request to the server
+    signupApiCall({ username, email, password });
+
     console.log("Username: ", username);
     console.log("Password: ", password);
     console.log("Email: ", email);
