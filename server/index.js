@@ -6,7 +6,7 @@ require("dotenv").config();
 const userRouter = require("./routes/user.routes");
 
 // Middleware Connections
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 
 // Routes

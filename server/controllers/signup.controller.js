@@ -7,7 +7,7 @@ const signupController = async (req, res) => {
     const { username, email, password } = req.body;
 
     //check if any field is missing
-    if (!username || !email || !password) {
+    if (!(username && email && password)) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -31,26 +31,20 @@ const signupController = async (req, res) => {
     const token = generateJWT(savedUser);
 
     //send token, username & email in response and store them in cookie
-    // return res
-    //   .status(201)
-    //   .cookie(
-    //     "livechatusercokie",
-    //     { token, username: savedUser.username, email: savedUser.email },
-    //     {
-    //       httpOnly: true,
-    //       secure: false,
-    //       sameSite: "none",
-    //       path: "/",
-    //       domain: "localhost",
-    //       maxAge: 24 * 60 * 60 * 1000,
-    //     }
-    //   );
-
-    return res.status(201).json({
-      token,
-      username: savedUser.username,
-      email: savedUser.email,
-    });
+    return res
+      .status(201)
+      .cookie(
+        "livechatusercokie",
+        { token, username: savedUser.username, email: savedUser.email },
+        {
+          httpOnly: true,
+          secure: false,
+          sameSite: "none",
+          path: "/",
+          domain: "localhost",
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+        }
+      ).json({ message: "User created successfully" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal server error" });

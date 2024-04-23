@@ -21,9 +21,6 @@ const Signup = () => {
     // Send a POST request to the server
     signupApiCall({ username, email, password });
 
-    console.log("Username: ", username);
-    console.log("Password: ", password);
-    console.log("Email: ", email);
     setPassword("");
     setUsername("");
     setEmail("");
