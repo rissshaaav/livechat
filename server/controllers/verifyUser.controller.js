@@ -1,24 +1,27 @@
-//receive cookie from client and authenticate it and return user data
-const express = require('express');
-var cookieParser = require('cookie-parser')
-const cookieAuthenticatorRouter = express.Router();
-const verifyToken = require('../utils/verifyToken.utils');
+const User = require("../models/user.model");
+const verifyToken = require("../utils/verifyToken.utils");
 
-cookieAuthenticatorRouter.use(cookieParser());
-
-cookieAuthenticatorRouter.get('/', (req, res) => {
+const verifyUser = async (req, res) => {
+  try {
     const cookieValue = req.cookies.livechatusercookie;
     if (cookieValue) {
-        const {token} = cookieValue;
-        const decoded = verifyToken(token, process.env.JWT_SECRET);
-        if (decoded) {
-            return res.json({decoded});
-        } else {
-            res.send('Token not valid');
-        }
+      const { token } = cookieValue;
+      const decoded = verifyToken(token, process.env.JWT_SECRET);
+      if (decoded) {
+        const user = await User.findById(decoded.userId);
+        return res.status(200).json({
+          username: user.username,
+          email: user.email,
+        });
+      } else {
+        return res.status(403).json({ message: "Invalid Token" });
+      }
     } else {
-        res.send('Cookie not found');
+      return res.status(404).json({ message: "Token not found" });
     }
-});
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+};
 
-module.exports = cookieAuthenticatorRouter;
+module.exports = verifyUser;
