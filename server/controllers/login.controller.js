@@ -21,8 +21,24 @@ const loginController = async (req, res) => {
 
         //send token, username, email in response
         return res
-          .status(200)
-          .json({ token, username: user.username, email: user.email });
+          .status(201)
+          .cookie(
+            "livechatusercokie",
+            { token, username: user.username, email: user.email },
+            {
+              httpOnly: true,
+              secure: false,
+              sameSite: "none",
+              path: "/",
+              domain: "localhost",
+              maxAge: 7 * 24 * 60 * 60 * 1000,
+            }
+          )
+          .json({
+            message: "User created successfully",
+            username: user.username,
+            email: user.email,
+          });
       } else {
         return res.status(400).json({ message: "Invalid credentials" });
       }

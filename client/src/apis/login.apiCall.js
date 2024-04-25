@@ -1,6 +1,6 @@
-export const signupApiCall = async (userData) => {
+export const loginApiCall = async (userData) => {
   try {
-    const response = await fetch("http://localhost:3001/user/signup", {
+    const response = await fetch("http://localhost:3001/user/login", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -16,4 +16,4 @@ export const signupApiCall = async (userData) => {
   }
 };
 
-// Path: client/src/components/Signup.js
+// Path: client/src/components/Login.js

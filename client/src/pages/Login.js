@@ -2,10 +2,16 @@ import React from "react";
 import { useState } from "react";
 import Input from "../components/Input";
 import { Link } from "react-router-dom";
+import { loginApiCall } from "../apis/login.apiCall";
+import { useDispatch } from "react-redux";
+import { storeUsername, storeEmail } from "../context/userData.slice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -15,9 +21,15 @@ const Login = () => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = () => {
-    console.log("Username: ", username);
-    console.log("Password: ", password);
+  const handleSubmit = async() => {
+    const res = await loginApiCall({ username, password });
+    console.log("loginRes", res.username, res.email);
+
+    dispatch(storeUsername(res.username));
+    dispatch(storeEmail(res.email));
+
+    navigate("/");
+
     setPassword("");
     setUsername("");
   };
