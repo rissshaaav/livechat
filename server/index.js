@@ -11,6 +11,7 @@ app.use(express.json());
 
 // Routes
 app.use("/user", userRouter);
+app.use("/verifyUser", require("./controllers/verifyUser.controller"));
 
 // Connection
 const PORT = process.env.PORT || 3001;

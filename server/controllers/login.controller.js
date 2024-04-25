@@ -13,6 +13,7 @@ const loginController = async (req, res) => {
 
     //check if user exists
     const user = await User.findOne({ username });
+    console.log("user", user.id);
     if (user) {
       //authenticate user
       if (await bcrypt.compare(password, user.password)) {
@@ -24,7 +25,7 @@ const loginController = async (req, res) => {
           .status(201)
           .cookie(
             "livechatusercokie",
-            { token, username: user.username, email: user.email },
+            { token },
             {
               httpOnly: true,
               secure: false,
