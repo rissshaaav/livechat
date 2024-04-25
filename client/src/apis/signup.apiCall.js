@@ -8,9 +8,9 @@ export const signupApiCall = async (userData) => {
       },
       body: JSON.stringify(userData),
     });
-    console.log("response", response);
+    // console.log("response", response);
     const data = await response.json();
-    console.log(data);
+    return data;
   } catch (error) {
     console.log(error);
   }

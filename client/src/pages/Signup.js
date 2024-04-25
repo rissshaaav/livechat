@@ -2,11 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import { signupApiCall } from "../apis/signup.apiCall";
+import { useDispatch } from "react-redux";
+import { storeUsername, storeEmail } from "../context/userData.slice";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -17,9 +22,19 @@ const Signup = () => {
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Send a POST request to the server
-    signupApiCall({ username, email, password });
+    const res = await signupApiCall({ username, email, password });
+    console.log("signupRes", res.username, res.email);
+    const globalUsername = res.username;
+    const globalEmail = res.email;
+
+    //dispatch the username and email to the store
+    dispatch(storeUsername(globalUsername));
+    dispatch(storeEmail(globalEmail));
+
+    //navigate to the home page
+    navigate("/");
 
     setPassword("");
     setUsername("");

@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import { store } from "./context/store";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Layout from "./Layout";
-// import Welcome from "./parts/Welcome";
 import Home from "./pages/Home";
 import Chats from "./pages/Chats";
 
@@ -32,7 +33,9 @@ const router = createBrowserRouter(
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
