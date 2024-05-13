@@ -3,12 +3,11 @@ const verifyToken = require("../utils/verifyToken.utils");
 
 const verifyUser = async (req, res) => {
   try {
-    const cookieValue = req.cookies.livechatusercookie;
+    const {jwtFromClient} = req.body;
     //check if cookie is present
-    if (cookieValue) {
-      const { token } = cookieValue;
+    if (jwtFromClient) {
       //verify token
-      const decoded = verifyToken(token, process.env.JWT_SECRET);
+      const decoded = verifyToken(jwtFromClient, process.env.JWT_SECRET);
       if (decoded) {
         //find user by id
         const user = await User.findById(decoded.userId);
@@ -18,10 +17,10 @@ const verifyUser = async (req, res) => {
           email: user.email,
         });
       } else {
-        return res.status(403).json({ message: "Invalid Token" });
+        return res.status(403).json({ message: "Invalid JWT" });
       }
     } else {
-      return res.status(404).json({ message: "Token not found" });
+      return res.status(404).json({ message: "JWT not found" });
     }
   } catch (error) {
     res.status(500).send("Internal Server Error");

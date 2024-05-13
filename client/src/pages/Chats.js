@@ -5,10 +5,11 @@ import MessageInput from "../components/MessageInput";
 import { VscSend } from "react-icons/vsc";
 import ChatHeader from "../parts/ChatHeader";
 
+
 const Chats = () => {
   return (
     <div className="w-full h-full flex flex-col">
-      <ChatHeader />
+      <ChatHeader name="Jane Doe"/>
 
       <div className="flex-1 overflow-y-auto no-scrollbar py-3">
         <OtherPersonMessage />

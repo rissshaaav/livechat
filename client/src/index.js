@@ -9,6 +9,7 @@ import Signup from "./pages/Signup";
 import Layout from "./Layout";
 import Home from "./pages/Home";
 import Chats from "./pages/Chats";
+// import { verifyUserApiCall } from "./apis/verifyUser.apiCall";
 
 import {
   createBrowserRouter,
@@ -17,15 +18,21 @@ import {
   Route,
 } from "react-router-dom";
 
+// let isAuthenticated = false;
+// const loginLogic = async () => {
+//   let isAuthenticated = await verifyUserApiCall({"jwtFromClient": localStorage.getItem("jwtFromClient")});
+//   return isAuthenticated;
+// };
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="login" element={<Login />} />
-      <Route path="signup" element={<Signup />} />
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={<Layout/>}>
         <Route path="" element={<Home />} />
         <Route path="chat" element={<Chats />} />
       </Route>
+      <Route path="login" element={<Login />} />
+      <Route path="signup" element={<Signup />} />
     </>
   )
 );

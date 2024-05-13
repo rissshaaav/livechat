@@ -10,6 +10,8 @@ export const loginApiCall = async (userData) => {
     });
     // console.log("response", response);
     const data = await response.json();
+    localStorage.setItem("jwtFromClient", data.token);
+    console.log("login api call", data);
     return data;
   } catch (error) {
     console.log(error);

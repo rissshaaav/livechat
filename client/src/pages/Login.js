@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Input from "../components/Input";
 import { Link } from "react-router-dom";
@@ -6,12 +6,28 @@ import { loginApiCall } from "../apis/login.apiCall";
 import { useDispatch } from "react-redux";
 import { storeUsername, storeEmail } from "../context/userData.slice";
 import { useNavigate } from "react-router-dom";
+import { verifyUserApiCall } from "../apis/verifyUser.apiCall";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loginLogic = async () => {
+      const res = await verifyUserApiCall({
+        jwtFromClient: localStorage.getItem("jwtFromClient"),
+      });
+
+      if (res) {
+        dispatch(storeUsername(res.username));
+        dispatch(storeEmail(res.email));
+        navigate("/");
+      }
+    };
+    loginLogic();
+  }, [dispatch, navigate]);
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -21,7 +37,7 @@ const Login = () => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     const res = await loginApiCall({ username, password });
     console.log("loginRes", res.username, res.email);
 

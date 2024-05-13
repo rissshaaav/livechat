@@ -25,13 +25,12 @@ const Signup = () => {
   const handleSubmit = async () => {
     // Send a POST request to the server
     const res = await signupApiCall({ username, email, password });
-    console.log("signupRes", res.username, res.email);
-    const globalUsername = res.username;
-    const globalEmail = res.email;
+    // console.log("signupRes", res.username, res.email);
 
+    localStorage.setItem("jwtFromClient", res.token);
     //dispatch the username and email to the store
-    dispatch(storeUsername(globalUsername));
-    dispatch(storeEmail(globalEmail));
+    dispatch(storeUsername(res.username));
+    dispatch(storeEmail(res.email));
 
     //navigate to the home page
     navigate("/");

@@ -8,10 +8,11 @@ import Input from "../components/Input";
 import SidebarListItem from "../components/SidebarListItem";
 // import ChatHeader from "./ChatHeader";
 import { useSelector } from "react-redux";
+import SidebarFooter from "../components/SidebarFooter";
 
 const Sidebar = () => {
   const userData = useSelector((state) => state.userData);
-  console.log("userData", userData);
+  // console.log("userData", userData);
   return (
     <div className="flex flex-col w-full h-full">
       {/* sidebar header */}
@@ -40,8 +41,7 @@ const Sidebar = () => {
         <SidebarListItem />
       </div>
       {/* sidebar footer */}
-      {/* <ChatHeader name={userData.globalUsername}/> */}
-      <SidebarListItem name={userData.globalUsername} status={userData.globalEmail}/>
+      <SidebarFooter name={userData.globalUsername} status={userData.globalEmail}/>
     </div>
   );
 };
